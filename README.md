@@ -1,2 +1,19 @@
 # gerbil-pyg
 Python in Gerbil.
+
+## Usage
+
+```scheme
+> (import :belmarca/pyg)
+> (pyg "for i in range(10): print(i)")
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+```

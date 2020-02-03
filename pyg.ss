@@ -1,6 +1,8 @@
 ;; pyg.ss
 
-(import :std/foreign)
+(import :std/foreign
+        (only-in :std/sugar assert!)
+        (only-in :std/format format))
 
 (export pyg)
 
@@ -13,6 +15,7 @@
   (define-c-lambda pyrun-simplestring (char-string) void "PyRun_SimpleString"))
 
 (def (pyg s)
+  (assert! (string? s) (format "pyg: ~a is not a string!" s))
   (py-initialize)
   (pyrun-simplestring s)
   (py-finalize))

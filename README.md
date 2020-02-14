@@ -30,31 +30,31 @@ $ LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libpython3.7m.so gxi
     (pyrun-simplestring "r = requests.get(\"http://httpbin.org/ip\")")
     (pyrun-simplestring "print(r.json())"))
 {'origin': 'x.x.x.x'}
+
+> (begin-python
+ (pyrun-simplestring "import requests")
+ (pyrun-simplestring "r = requests.get(\"http://httpbin.org/ip\")")
+ (pyrun-simplestring "print(r.json())"))
+
+> (pyrun "import requests
+r = requests.get(\"http://httpbin.org/ip\")
+print(r.json())")
+
+> (pyrun "import matplotlib.pyplot as plt
+plt.plot([1, 2, 3, 4])
+plt.ylabel('some numbers')
+plt.show()")
+
+> (pyrun "import matplotlib.pyplot as plt
+import numpy as np
+import sys
+sys.argv = ['']
+t = np.arange(0.0, 2.0, 0.01)
+s = 1 + np.sin(2*np.pi*t)
+plt.plot(t, s)
+plt.xlabel('time (s)')
+plt.ylabel('voltage (mV)')
+plt.title('About as simple as it gets, folks')
+plt.grid(True)
+plt.show()")
 ```
-
-;; (begin-python
-;;  (pyrun-simplestring "import requests")
-;;  (pyrun-simplestring "r = requests.get(\"http://httpbin.org/ip\")")
-;;  (pyrun-simplestring "print(r.json())"))
-
-;; (pyrun "import requests
-;; r = requests.get(\"http://httpbin.org/ip\")
-;; print(r.json())")
-
-;; (pyrun "import matplotlib.pyplot as plt
-;; plt.plot([1, 2, 3, 4])
-;; plt.ylabel('some numbers')
-;; plt.show()")
-
-;; (pyrun "import matplotlib.pyplot as plt
-;; import numpy as np
-;; import sys
-;; sys.argv = ['']
-;; t = np.arange(0.0, 2.0, 0.01)
-;; s = 1 + np.sin(2*np.pi*t)
-;; plt.plot(t, s)
-;; plt.xlabel('time (s)')
-;; plt.ylabel('voltage (mV)')
-;; plt.title('About as simple as it gets, folks')
-;; plt.grid(True)
-;; plt.show()")

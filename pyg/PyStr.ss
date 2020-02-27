@@ -2,7 +2,7 @@
 ;; Interface to PyUnicode_Type.
 
 (import ./_PyStr
-        (only-in ./_PyObject PyObject->string)
+        (only-in ./_PyObject PyObject*->string)
         (only-in ./PyAPI
                  PyUnicode_FromString
                  ___PyUnicode_string))
@@ -14,7 +14,7 @@
 
 ;; PyObject* conversion
 (def (PyStr->string o)
-  (PyObject->string o))
+  (PyObject*->string o))
 
 (def (PyUnicode->string o)
   (___PyUnicode_string o))

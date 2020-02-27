@@ -52,7 +52,7 @@
 ;; Scheme representation
 (defmethod {str PyObject}
   (lambda (self)
-    (PyObject->string (@ self ptr))))
+    (PyObject*->string (@ self ptr))))
 
 ;; Conversion based on type field
 (defmethod {conv PyObject}

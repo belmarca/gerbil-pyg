@@ -5,12 +5,12 @@
                  PyObject_Str
                  ___PyUnicode_string))
 
-(export PyObject->string
+(export PyObject*->string
         PyObject
         make-PyObject)
 
 ;; PyObject* conversion
-(def (PyObject->string o)
+(def (PyObject*->string o)
   (___PyUnicode_string (PyObject_Str o)))
 
 ;; Scheme representation

@@ -3,7 +3,7 @@
 
 (import ./_PyInt
         (only-in ./PyAPI PyLong_FromLongLong)
-        (only-in ./_PyObject PyObject->string))
+        (only-in ./_PyObject PyObject*->string))
 
 (export PyLong_Type->fixnum
         fixnum->PyInt*
@@ -11,7 +11,7 @@
 
 ;; PyObject* conversion
 (def (PyLong_Type->fixnum PyObject*)
-  (string->number (PyObject->string PyObject*)))
+  (string->number (PyObject*->string PyObject*)))
 
 ;; returns a PyObject*
 ;; use PyInt constructor to create a wrapped PyObject*

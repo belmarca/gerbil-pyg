@@ -4,6 +4,9 @@
 (import ./_PyObject
         (only-in ./PyAPI PyLong_FromLongLong))
 
+(export PyInt
+        make-PyInt)
+
 ;; Scheme representation
 (defclass (PyInt PyObject) ()
   constructor: :init!

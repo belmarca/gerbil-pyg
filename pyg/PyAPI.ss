@@ -265,7 +265,7 @@ ___SCMOBJ ___PyUnicode_string(PyObject * src)
   (define PY_MINOR_VERSION ((c-lambda () int "___return(PY_MINOR_VERSION);")))
   (define PY_MICRO_VERSION ((c-lambda () int "___return(PY_MICRO_VERSION);")))
 
-  (define (ffi/pytype o)
+  (define (___pytype o)
     (string->symbol ((c-lambda (PyObject*) nonnull-char-string "___pytype") o)))
 
   )

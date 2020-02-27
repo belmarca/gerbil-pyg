@@ -19,4 +19,5 @@
     "pyg/PyStr.ss"
     "pyg/PyObject.ss"
     "pyg/PyList.ss"
+    "pyg.ss"
     ))

@@ -2,13 +2,13 @@
 ;; Interface to PyList_Type.
 
 (import ./_PyList
-        ./PyObject
-        (only-in ./PyAPI
-                 PyList_GetItem
-                 PyList_Size))
+        (only-in ./PyObject
+                 Py->Scm
+                 Scm->Py))
 
 (export PyList->list
         PyList->vector
+        list->PyList*
         (import: ./_PyList))
 
 ;; PyObject* conversion
@@ -16,4 +16,9 @@
   (_PyList->list o Py->Scm))
 
 (def (PyList->vector o)
-  (_PyList->list o Py->Scm))
+  (_PyList->vector o Py->Scm))
+
+;; returns a PyObject*
+;; use PyList constructor to create a wrapped PyObject*
+(define (list->PyList* l)
+  (_list->PyList* l Scm->Py))

@@ -3,10 +3,14 @@
 
 (import ./_PyStr
         (only-in ./_PyObject PyObject->string)
-        (only-in ./PyAPI ___PyUnicode_string))
+        (only-in ./PyAPI
+                 PyUnicode_FromString
+                 ___PyUnicode_string))
 
 (export PyStr->string
-        PyUnicode->string)
+        string->PyStr*
+        PyUnicode->string
+        (import: ./_PyStr))
 
 ;; PyObject* conversion
 (def (PyStr->string o)
@@ -14,3 +18,8 @@
 
 (def (PyUnicode->string o)
   (___PyUnicode_string o))
+
+;; returns a PyObject*
+;; use PyStr constructor to create a wrapped PyObject*
+(def (string->PyStr* s)
+  (PyUnicode_FromString s))

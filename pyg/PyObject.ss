@@ -10,27 +10,44 @@
 
 (export Py->Scm
         Py->Scm*
+        Scm->Py
         PyObject
-        make-PyObject)
+        make-PyObject
+        (import: ./_PyObject))
 
 ;; PyObject* conversion
 
+;; we need a parameter to propagate the conversion function choice
+;; throughout the lifetime of the calls
+(def +list-conv+ (make-parameter (lambda (x) x)))
+
 ;; takes a PyObject* and turns it into the proper scheme object
 ;; optional type to avoid an FFI call
-(def (Py->Scm o (type #f) list-conv: (list-conv _PyList->list))
-  (if (not type)
-    (let (type (___pytype o))
-      (Py->Scm* o type list-conv: list-conv))
-    (Py->Scm* o type list-conv: list-conv)))
+(def (Py->Scm o (type #f) list-conv: (list-conv (+list-conv+)))
+  (parameterize ((+list-conv+ list-conv))
+    (if (not type)
+      (let (type (___pytype o))
+        (Py->Scm* o type list-conv: list-conv))
+      (Py->Scm* o type list-conv: list-conv))))
 
 ;; generic conversion procedure, operates on PyObject*
-(def (Py->Scm* o type list-conv: (list-conv _PyList->list))
-  (case type
-    ((str)    (PyStr->string o))
-    ((int)    (PyLong_Type->integer o))
-    ((float)  (PyFloat->flonum o))
-    ((list)   (list-conv o))
-    (else #f)))
+(def (Py->Scm* o type list-conv: (list-conv (+list-conv+)))
+  (parameterize ((+list-conv+ list-conv))
+    (case type
+      ((str)    (PyStr->string o))
+      ((int)    (PyLong_Type->fixnum o))
+      ((float)  (PyFloat->flonum o))
+      ((list)   (list-conv o))
+      (else #f))))
+
+;; generic scheme to python conversion
+(def (Scm->Py o)
+  (cond
+   ((integer? o) (fixnum->PyInt* o))
+   ((flonum? o)  (flonum->PyFloat* o))
+   ((string? o)  (string->PyStr* o))
+   ((pair? o)    (_list->PyList* o Scm->Py))
+   (else (error "cannot convert object" o))))
 
 ;; Scheme representation
 (defmethod {str PyObject}

@@ -7,6 +7,11 @@
 ;; parameterize the environment
 (+pyenv+ env)
 
+;; (def requests (pyimport* "requests"))
+;; (def requests.dict (PyModule_GetDict requests))
+;; (def r (pyrun* "get(\"http://httpbin.org/ip\")" locals: requests.dict))
+;; (def json (pyrun* "r.json()" locals: requests.dict))
+
 (define pyint (PyInt 9000))
 (define pyfloat (PyFloat 1.992))
 (define pystring (PyString "Hello, world!"))
